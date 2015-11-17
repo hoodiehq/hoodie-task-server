@@ -2,6 +2,11 @@
 
 > CouchDB-based REST & front-end API for asynchronous background tasks
 
+[![Build Status](https://travis-ci.org/hoodiehq/hoodie-server-task.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-server-task)
+[![Coverage Status](https://coveralls.io/repos/hoodiehq/hoodie-server-task/badge.svg?branch=master)](https://coveralls.io/r/hoodiehq/hoodie-server-task?branch=master)
+[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-server-task.svg)](https://david-dm.org/hoodiehq/hoodie-server-task)
+[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-server-task/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-server-task#info=devDependencies)
+
 ## Scope
 
 The goal is to create very simplistic server for static apps that can
