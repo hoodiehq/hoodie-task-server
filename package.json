@@ -1,0 +1,43 @@
+{
+  "name": "hoodie-server-account",
+  "description": "CouchDB-based REST & front-end API for asynchronous background tasks",
+  "main": "index.js",
+  "bin": "bin/server.js",
+  "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "pretest": "standard",
+    "test": "nyc tap --no-cov tests/**/*.js",
+    "start": "bin/server",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "postsemantic-release": "npm run coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hoodiehq/hoodie-server-account.git"
+  },
+  "keywords": [
+    "hapi",
+    "plugin",
+    "couchdb",
+    "pouchdb",
+    "task",
+    "hoodie"
+  ],
+  "author": "Gregor Martynus <gregor@martynus.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hoodiehq/hoodie-server-account/issues"
+  },
+  "homepage": "https://github.com/hoodiehq/hoodie-server-account#readme",
+  "devDependencies": {
+    "coveralls": "^2.11.4",
+    "hapi": "^11.1.1",
+    "nyc": "^3.2.2",
+    "semantic-release": "^6.0.3",
+    "standard": "^5.4.0",
+    "tap": "^2.2.1"
+  },
+  "dependencies": {
+    "h2o2": "^4.0.1"
+  }
+}
