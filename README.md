@@ -36,7 +36,7 @@ var options = {
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'mailer@example.com',
+    queue: 'mailer@example.com',
     pass: 'secret'
   }
 })
@@ -64,16 +64,16 @@ server.start(function () {
 ## REST API
 
 ```
-POST /api/user/<id>/_bulk_docs
-GET /api/user/<id>/_changes
+POST /api/queue/<id>/_bulk_docs
+GET /api/queue/<id>/_changes
 ```
 
 ## How it works
 
 Tasks are json objects with special properties. `hoodie-server-task` creates a
-database (`tasks` by default) where all task objects from all users are
-replicated to / from. Users can only access their own tasks
-(`/api/user/<id>/_changes` is a filtered changes feed by the given user id).
+database (`tasks` by default) where all task objects from all queues are
+replicated to / from. Queues can only access their own tasks
+(`/api/queue/<id>/_changes` is a filtered changes feed by the given queue id).
 
 ## Local setup & tests
 
