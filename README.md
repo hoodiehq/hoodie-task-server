@@ -78,7 +78,7 @@ replicated to / from. Queues can only access their own tasks
 ## Local setup & tests
 
 ```bash
-git clone git@github.com:hoodiehq/hoodie-server-task.git
+git clone https://github.com/hoodiehq/hoodie-server-task.git
 cd hoodie-server-task
 npm install
 npm test
