@@ -33,7 +33,7 @@
     "hapi": "^13.0.0",
     "nyc": "^6.0.0",
     "semantic-release": "^6.0.3",
-    "standard": "^6.0.3",
+    "standard": "^7.0.0",
     "tap": "^5.1.1"
   },
   "dependencies": {
