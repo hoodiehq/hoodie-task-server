@@ -34,7 +34,7 @@
     "nyc": "^6.0.0",
     "semantic-release": "^6.0.3",
     "standard": "^7.0.0",
-    "tap": "^5.1.1"
+    "tap": "^6.1.0"
   },
   "dependencies": {
     "h2o2": "^5.0.0"
