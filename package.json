@@ -30,7 +30,7 @@
   "homepage": "https://github.com/hoodiehq/hoodie-server-task#readme",
   "devDependencies": {
     "coveralls": "^2.11.4",
-    "hapi": "^14.0.0",
+    "hapi": "^15.0.1",
     "nyc": "^8.1.0",
     "semantic-release": "^6.0.3",
     "standard": "^8.0.0",
