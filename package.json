@@ -1,7 +1,10 @@
 {
-  "name": "hoodie-server-task",
+  "name": "@hoodie/task-server",
   "description": "CouchDB-based REST & front-end API for asynchronous background tasks",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "pretest": "standard",
@@ -12,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/hoodiehq/hoodie-server-task.git"
+    "url": "https://github.com/hoodiehq/hoodie-task-server.git"
   },
   "keywords": [
     "hapi",
@@ -25,14 +28,14 @@
   "author": "The Hoodie Community and other contributors | http://hood.ie/",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/hoodiehq/hoodie-server-task/issues"
+    "url": "https://github.com/hoodiehq/hoodie-task-server/issues"
   },
-  "homepage": "https://github.com/hoodiehq/hoodie-server-task#readme",
+  "homepage": "https://github.com/hoodiehq/hoodie-task-server#readme",
   "devDependencies": {
     "coveralls": "^2.11.4",
     "hapi": "^15.0.1",
     "nyc": "^8.1.0",
-    "semantic-release": "^6.0.3",
+    "semantic-release": "^6.3.2",
     "standard": "^8.0.0",
     "tap": "^8.0.0"
   },
