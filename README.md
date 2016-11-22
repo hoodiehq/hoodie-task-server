@@ -1,11 +1,11 @@
-# hoodie-server-task
+# hoodie-task-server
 
 > CouchDB-based REST & front-end API for asynchronous background tasks
 
-[![Build Status](https://travis-ci.org/hoodiehq/hoodie-server-task.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-server-task)
-[![Coverage Status](https://coveralls.io/repos/hoodiehq/hoodie-server-task/badge.svg?branch=master)](https://coveralls.io/r/hoodiehq/hoodie-server-task?branch=master)
-[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-server-task.svg)](https://david-dm.org/hoodiehq/hoodie-server-task)
-[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-server-task/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-server-task#info=devDependencies)
+[![Build Status](https://travis-ci.org/hoodiehq/hoodie-task-server.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-task-server)
+[![Coverage Status](https://coveralls.io/repos/hoodiehq/hoodie-task-server/badge.svg?branch=master)](https://coveralls.io/r/hoodiehq/hoodie-task-server?branch=master)
+[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-task-server.svg)](https://david-dm.org/hoodiehq/hoodie-task-server)
+[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-task-server/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-task-server#info=devDependencies)
 
 ## Scope
 
@@ -16,7 +16,7 @@ API.
 ## Install
 
 ```
-npm install --save hoodie-server-task
+npm install --save hoodie-task-server
 ```
 
 
@@ -27,7 +27,7 @@ send emails from the front-end
 
 ```js
 var Hapi = require('hapi')
-var hapiTask = require('hoodie-server-task')
+var hapiTask = require('hoodie-task-server')
 
 var options = {
   couchdb: 'http://localhost:5984'
@@ -70,7 +70,7 @@ GET /api/queue/<id>/_changes
 
 ## How it works
 
-Tasks are json objects with special properties. `hoodie-server-task` creates a
+Tasks are json objects with special properties. `hoodie-task-server` creates a
 database (`tasks` by default) where all task objects from all queues are
 replicated to / from. Queues can only access their own tasks
 (`/api/queue/<id>/_changes` is a filtered changes feed by the given queue id).
@@ -78,8 +78,8 @@ replicated to / from. Queues can only access their own tasks
 ## Local setup & tests
 
 ```bash
-git clone https://github.com/hoodiehq/hoodie-server-task.git
-cd hoodie-server-task
+git clone https://github.com/hoodiehq/hoodie-task-server.git
+cd hoodie-task-server
 npm install
 npm test
 ```
