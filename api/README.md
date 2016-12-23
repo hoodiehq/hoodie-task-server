@@ -25,16 +25,13 @@ var task = require('@hoodie/task-server/api')(PouchDB)
 ```js
 // all methods return promises
 task.success(taskDoc)
-store.error(taskDoc, error)
+task.error(taskDoc, error)
 
 // events
 task.on('add', function(object, options) {})
 task.on('update', function(object, options) {})
 task.on('remove', function(object, options) {})
 task.on('change', function(eventName, object, options) {})
-store.one(eventName, eventHandlerFunction)
-store.off(eventName, eventHandlerFunction)
-
-// original PouchDB (http://pouchdb.com/api.html) instance used for the store
-store.db
+task.one(eventName, eventHandlerFunction)
+task.off(eventName, eventHandlerFunction)
 ```
