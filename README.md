@@ -1,88 +1,87 @@
 # hoodie-task-server
 
-> CouchDB-based REST & front-end API for asynchronous background tasks
+> Task API
 
-[![Build Status](https://travis-ci.org/hoodiehq/hoodie-task-server.svg?branch=master)](https://travis-ci.org/hoodiehq/hoodie-task-server)
-[![Coverage Status](https://coveralls.io/repos/hoodiehq/hoodie-task-server/badge.svg?branch=master)](https://coveralls.io/r/hoodiehq/hoodie-task-server?branch=master)
-[![Dependency Status](https://david-dm.org/hoodiehq/hoodie-task-server.svg)](https://david-dm.org/hoodiehq/hoodie-task-server)
-[![devDependency Status](https://david-dm.org/hoodiehq/hoodie-task-server/dev-status.svg)](https://david-dm.org/hoodiehq/hoodie-task-server#info=devDependencies)
+`hoodie-task-server` is a [Hapi](http://hapijs.com/) plugin that exposes an API for managing tasks.
 
-## Scope
-
-The goal is to create very simplistic server for static apps that can
-run background tasks that require back-end logic using a simple front-end
-API.
-
-## Install
-
-```
-npm install --save hoodie-task-server
-```
-
-
-## Server API
-
-Example usage with [nodemailer](https://www.npmjs.com/package/nodemailer) to
-send emails from the front-end
+## Example
 
 ```js
 var Hapi = require('hapi')
-var hapiTask = require('hoodie-task-server')
+var hoodietask = require('@hoodie/task-server')
+var PouchDB = require('pouchdb')
 
-var options = {
-  couchdb: 'http://localhost:5984'
-})
-
-var transporter = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    queue: 'mailer@example.com',
-    pass: 'secret'
-  }
-})
-
-server.register({register: hapiTask}, options, function (error) {
-  var taskApi = server.plugins.task.api
-  taskApi('mytask').on('start', function (task) {
-    if (task.isFunky) {
-      taskApi.success(task, function (error) {})
-    } else {
-      taskApi.success(task, 'you not funky!', function (error) {})
-    }
-  })
-});
+var server = new Hapi.Server()
 
 server.connection({
   port: 8000
-});
+})
+
+server.register({
+  register: hoodieTask,
+  options: {
+    PouchDB: PouchDB
+  }
+}, function (error) {
+  if (error) throw error
+})
+
 
 server.start(function () {
-  console.log('Server running at %s', server.info.uri);
-});
+  console.log('Server running at %s', server.info.uri)
+})
 ```
 
-## REST API
+## Options
+
+### options.PouchDB
+
+PouchDB constructor. _Required_
+
+```js
+options: {
+  PouchDB: require('pouchdb-core').plugin('pouchdb-adapter-leveldb')
+}
+```
+
+If you want connect to a CouchDB, use the `pouchdb-adapter-http` and set
+`options.prefix` to the CouchDB url. All requests will be proxied to CouchDB
+directly, the PouchDB constructor is only used for [server.plugins.store.api](api)
+
+```js
+options: {
+  PouchDB: require('pouchdb-core')
+    .plugin('pouchdb-adapter-http')
+    .defaults({
+      prefix: 'http://localhost:5984',
+      auth: {
+        username: 'admin',
+        password: 'secret'
+      }
+    })
+}
+```
+
+## Testing
+
+Local setup
 
 ```
-POST /api/queue/<id>/_bulk_docs
-GET /api/queue/<id>/_changes
-```
-
-## How it works
-
-Tasks are json objects with special properties. `hoodie-task-server` creates a
-database (`tasks` by default) where all task objects from all queues are
-replicated to / from. Queues can only access their own tasks
-(`/api/queue/<id>/_changes` is a filtered changes feed by the given queue id).
-
-## Local setup & tests
-
-```bash
 git clone https://github.com/hoodiehq/hoodie-task-server.git
-cd hoodie-task-server
+cd hoodie-store-server
 npm install
+```
+
+Run all tests and code style checks
+
+```
 npm test
 ```
+
+## Contributing
+
+Have a look at the Hoodie project's [contribution guidelines](https://github.com/hoodiehq/hoodie/blob/master/CONTRIBUTING.md).
+If you want to hang out you can join our [Hoodie Community Chat](http://hood.ie/chat/).
 
 ## License
 
