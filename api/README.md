@@ -24,7 +24,7 @@ var task = require('@hoodie/task-server/api')(PouchDB)
 
 ```js
 // all methods return promises
-task.success(taskDoc)
+task.success(taskDoc, /*optional*/ data) // data is automatically set as additional property of the task doc
 task.error(taskDoc, error)
 
 // events

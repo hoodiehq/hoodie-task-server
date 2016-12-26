@@ -2,13 +2,13 @@
 
 > Task API
 
-`hoodie-task-server` is a [Hapi](http://hapijs.com/) plugin that exposes an API for managing tasks.
+`hoodie-task-server` is a [Hapi](http://hapijs.com/) plugin that exposes an API for managing tasks and defines all [CouchDB endpoint routes](http://docs.couchdb.org/en/2.0.0/http-api.html) that are necessary for replication so that task objects can be synced.
 
 ## Example
 
 ```js
 var Hapi = require('hapi')
-var hoodietask = require('@hoodie/task-server')
+var hoodieTask = require('@hoodie/task-server')
 var PouchDB = require('pouchdb')
 
 var server = new Hapi.Server()
@@ -40,18 +40,23 @@ PouchDB constructor. _Required_
 
 ```js
 options: {
-  PouchDB: require('pouchdb-core').plugin('pouchdb-adapter-leveldb')
+  PouchDB: require('pouchdb-core')
+    .plugin(require('pouchdb-adapter-leveldb'))
+    .plugin(require('pouchdb-replication'))
+    .plugin(require('pouchdb-mapreduce'))
 }
 ```
 
-If you want connect to a CouchDB, use the `pouchdb-adapter-http` and set
+If you want connect to a CouchDB instance, use the `pouchdb-adapter-http` and set
 `options.prefix` to the CouchDB url. All requests will be proxied to CouchDB
 directly, the PouchDB constructor is only used for [server.plugins.store.api](api)
 
 ```js
 options: {
   PouchDB: require('pouchdb-core')
-    .plugin('pouchdb-adapter-http')
+    .plugin(require('pouchdb-adapter-http'))
+    .plugin(require('pouchdb-replication'))
+    .plugin(require('pouchdb-mapreduce'))
     .defaults({
       prefix: 'http://localhost:5984',
       auth: {
@@ -68,7 +73,7 @@ Local setup
 
 ```
 git clone https://github.com/hoodiehq/hoodie-task-server.git
-cd hoodie-store-server
+cd hoodie-task-server
 npm install
 ```
 

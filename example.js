@@ -1,6 +1,8 @@
 var Hapi = require('hapi')
 var PouchDB = require('pouchdb-core')
-  .plugin('pouchdb-plugin-http')
+  .plugin(require('pouchdb-plugin-http'))
+  .plugin(require('pouchdb-replication'))
+  .plugin(require('pouchdb-mapreduce'))
   .defaults({
     prefix: 'http://localhost:5984',
     auth: {
