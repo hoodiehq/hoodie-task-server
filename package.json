@@ -5,7 +5,7 @@
   "scripts": {
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "pretest": "standard",
-    "test": "nyc tap 'test/{unit,integration}/**/*-test.js'",
+    "test": "standard",
     "start": "bin/server",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "postsemantic-release": "npm run coverage",
@@ -44,7 +44,7 @@
     "pouchdb-replication": "^6.0.7",
     "proxyquire": "^1.7.10",
     "semantic-release": "^6.0.3",
-    "standard": "^8.0.0",
+    "standard": "^8.6.0",
     "tap": "^7.0.0"
   },
   "dependencies": {

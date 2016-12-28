@@ -108,7 +108,7 @@ function hapiCouchDbStore (server, options, next) {
       handler(request, reply)
     }
   }]
-  
+
   server.route(routes)
 
   function handler (request, reply) {
