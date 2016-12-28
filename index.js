@@ -6,7 +6,6 @@ hapiCouchDbStore.attributes = {
 
 var url = require('url')
 
-var boom = require('boom')
 var hapiToExpress = require('@gr2m/hapi-to-express')
 
 var TaskFactory = require('./api')
@@ -26,7 +25,7 @@ function hapiCouchDbStore (server, options, next) {
     })
   } else {
     var xapp = require('express-pouchdb')(options.PouchDB, {
-      mode: 'fullCouchDB' /* change to minimumForPouchDB when ready*/
+      mode: 'fullCouchDB' /* change to minimumForPouchDB when ready */
     })
     xapp.disable('x-powered-by')
   }
@@ -51,63 +50,63 @@ function hapiCouchDbStore (server, options, next) {
   server.route([{
     method: 'GET',
     path: '/api/queue/', /* root welcome */
-    handler: function(request, reply){
+    handler: function (request, reply) {
       request.raw.req.url = '/'
       handler(request, reply)
-      }
+    }
     }, {
     method: 'GET',
     path: '/api/queue/{queueId}/', /* stats how many docs etc */
-    handler: function(request, reply){
+    handler: function (request, reply) {
       request.raw.req.url = '/tasks'
       handler(request, reply)
-      }
+    }
     }, {
     method: ['GET', 'PUT'],
     path: '/api/queue/{queueId}/_local/{id}', /* _local - not replicated */
-    handler: function(request, reply){
+    handler: function (request, reply) {
       var id = request.params.id
       request.raw.req.url = '/tasks/_local/' + id
       handler(request, reply)
-      }
+    }
     }, {
     method: 'GET',
     path: '/api/queue/{queueId}/_changes',
-    handler: function(request, reply){
+    handler: function (request, reply) {
       // TODO: needs to be filtered by queueId
       request.raw.req.url = '/tasks/_changes'
       handler(request, reply)
-      }
+    }
     }, {
     method: 'GET',
     path: '/api/queue/{queueId}/_all_docs',
-    handler: function(request, reply){
+    handler: function (request, reply) {
       // TODO: needs to be filtered by queueId
       request.raw.req.url = '/tasks/_all_docs'
       handler(request, reply)
-      }
+    }
     }, {
     method: 'GET',
     path: '/api/queue/{queueId}/{docId}',
-    handler: function(request, reply){
+    handler: function (request, reply) {
       // TODO: needs to be filtered by queueId
       request.raw.req.url = '/tasks/' + request.params.docId
       handler(request, reply)
-      }
+    }
     }, {
     method: 'POST',
     path: '/api/queue/{queueId}/_revs_diff',
-    handler: function(request, reply){
+    handler: function (request, reply) {
       request.raw.req.url = '/tasks/_revs_diff'
       handler(request, reply)
-      }
+    }
     }, {
     method: 'POST',
     path: '/api/queue/{queueId}/_bulk_docs',
-    handler: function(request, reply){
+    handler: function (request, reply) {
       request.raw.req.url = '/tasks/_bulk_docs'
       handler(request, reply)
-      }
+    }
     }])
 
   function handler (request, reply) {

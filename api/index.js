@@ -11,13 +11,13 @@ function TaskAPIFactory (PouchDB) {
   .then(makeApi)
   .catch(function (error) {
     if (error.status !== 409) {
-      throw new Error('Something unexpected happened: '+error)
+      throw new Error('Something unexpected happened: ' + error)
     } else {
       return makeApi()
     }
   })
 
-  function makeApi() {
+  function makeApi () {
     return storeApi.open('tasks')
     .then(function (taskStore) {
       var api = {}
@@ -28,10 +28,10 @@ function TaskAPIFactory (PouchDB) {
       api.success = function (taskDoc, data) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
         if (data) taskDoc['data'] = data
-        taskStore.remove(taskDoc);
+        taskStore.remove(taskDoc)
       }
 
-      api.error = function(taskDoc, error) {
+      api.error = function (taskDoc, error) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
         if (!error) throw new Error('Task Error requires error as second argument')
         taskDoc['error'] = error
