@@ -47,21 +47,21 @@ function hapiCouchDbStore (server, options, next) {
   })
 
   // TODO: Deal with trailing slashes(?)
-  server.route([{
+  var routes = [{
     method: 'GET',
     path: '/api/queue/', /* root welcome */
     handler: function (request, reply) {
       request.raw.req.url = '/'
       handler(request, reply)
     }
-    }, {
+  }, {
     method: 'GET',
     path: '/api/queue/{queueId}/', /* stats how many docs etc */
     handler: function (request, reply) {
       request.raw.req.url = '/tasks'
       handler(request, reply)
     }
-    }, {
+  }, {
     method: ['GET', 'PUT'],
     path: '/api/queue/{queueId}/_local/{id}', /* _local - not replicated */
     handler: function (request, reply) {
@@ -69,7 +69,7 @@ function hapiCouchDbStore (server, options, next) {
       request.raw.req.url = '/tasks/_local/' + id
       handler(request, reply)
     }
-    }, {
+  }, {
     method: 'GET',
     path: '/api/queue/{queueId}/_changes',
     handler: function (request, reply) {
@@ -77,7 +77,7 @@ function hapiCouchDbStore (server, options, next) {
       request.raw.req.url = '/tasks/_changes'
       handler(request, reply)
     }
-    }, {
+  }, {
     method: 'GET',
     path: '/api/queue/{queueId}/_all_docs',
     handler: function (request, reply) {
@@ -85,7 +85,7 @@ function hapiCouchDbStore (server, options, next) {
       request.raw.req.url = '/tasks/_all_docs'
       handler(request, reply)
     }
-    }, {
+  }, {
     method: 'GET',
     path: '/api/queue/{queueId}/{docId}',
     handler: function (request, reply) {
@@ -93,21 +93,23 @@ function hapiCouchDbStore (server, options, next) {
       request.raw.req.url = '/tasks/' + request.params.docId
       handler(request, reply)
     }
-    }, {
+  }, {
     method: 'POST',
     path: '/api/queue/{queueId}/_revs_diff',
     handler: function (request, reply) {
       request.raw.req.url = '/tasks/_revs_diff'
       handler(request, reply)
     }
-    }, {
+  }, {
     method: 'POST',
     path: '/api/queue/{queueId}/_bulk_docs',
     handler: function (request, reply) {
       request.raw.req.url = '/tasks/_bulk_docs'
       handler(request, reply)
     }
-    }])
+  }]
+  
+  server.route(routes)
 
   function handler (request, reply) {
     if (api.adapter === 'http') {
