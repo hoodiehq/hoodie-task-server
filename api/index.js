@@ -31,6 +31,16 @@ function TaskAPIFactory (PouchDB) {
         taskStore.remove(taskDoc)
       }
 
+      api.progress = function (taskDoc, progressValue) {
+        if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
+        if (!progressValue) throw new Error('Task Error requires progressValue as second argument')
+        if (taskDoc['progress'] === undefined || !Array.isArray(taskDoc['progress'])) {
+          taskDoc['progress'] = []
+        }
+        taskDoc['progress'].push(progressValue)
+        taskStore.remove(taskDoc)
+      }
+
       api.error = function (taskDoc, error) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
         if (!error) throw new Error('Task Error requires error as second argument')
