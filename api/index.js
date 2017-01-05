@@ -31,14 +31,23 @@ function TaskAPIFactory (PouchDB) {
         taskStore.remove(taskDoc)
       }
 
-      api.progress = function (taskDoc, progressValue) {
+      api.progress = function (taskDoc, options) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
-        if (!progressValue) throw new Error('Task Error requires progressValue as second argument')
+
+        // merge options with defaults
+        let progressState = Object.assign({
+          name: 'progress',
+          at: new Date().toISOString()
+        }, options)
+
+        // check whether `progress` is a key in taskDoc and if it is an Array
         if (taskDoc['progress'] === undefined || !Array.isArray(taskDoc['progress'])) {
           taskDoc['progress'] = []
         }
-        taskDoc['progress'].push(progressValue)
-        taskStore.remove(taskDoc)
+        taskDoc['progress'].push(progressState)
+
+        // update the taskDoc with new progress state, in the task store
+        taskStore.update(taskDoc)
       }
 
       api.error = function (taskDoc, error) {
