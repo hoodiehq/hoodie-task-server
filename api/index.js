@@ -1,5 +1,7 @@
 module.exports = TaskAPIFactory
 
+var _ = require('lodash')
+
 function TaskAPIFactory (PouchDB) {
   if (typeof PouchDB !== 'function') {
     throw new Error('Task API Factory requires PouchDB as first argument')
@@ -34,8 +36,8 @@ function TaskAPIFactory (PouchDB) {
       api.progress = function (taskDoc, options) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
 
-        // merge options with defaults
-        let progressState = Object.assign({
+        // shallow merge options with defaults
+        var progressState = _.assign({
           name: 'progress',
           at: new Date().toISOString()
         }, options)
@@ -47,7 +49,7 @@ function TaskAPIFactory (PouchDB) {
         taskDoc['progress'].push(progressState)
 
         // update the taskDoc with new progress state, in the task store
-        taskStore.update(taskDoc)
+        return taskStore.update(taskDoc)
       }
 
       api.error = function (taskDoc, error) {
