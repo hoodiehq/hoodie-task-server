@@ -17,6 +17,7 @@ var task = require('@hoodie/task-server/api')(PouchDB)
 
 - [Factory](#factory)
 - [Task.success()](#tasksuccess)
+- [Task.progress()](#taskprogress)
 - [Task.error()](#taskerror)
 - [Events](#events)
 
@@ -25,6 +26,7 @@ var task = require('@hoodie/task-server/api')(PouchDB)
 ```js
 // all methods return promises
 task.success(taskDoc, /*optional*/ data) // data is automatically set as additional property of the task doc
+task.progress(taskDoc, /* optional */ data) // data is automatically merged with defaults to push a progress state into the task doc
 task.error(taskDoc, error)
 
 // events
