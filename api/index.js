@@ -2,6 +2,20 @@ module.exports = TaskAPIFactory
 
 var _ = require('lodash')
 
+function addToProgressLifeCycle (taskDoc, options) {
+  // shallow merge options with defaults
+  var progressState = _.assign({
+    name: 'progress',
+    at: new Date().toISOString()
+  }, options)
+
+  // check whether `progress` is a key in taskDoc and if it is an Array
+  if (taskDoc['progress'] === undefined || !Array.isArray(taskDoc['progress'])) {
+    taskDoc['progress'] = []
+  }
+  taskDoc['progress'].push(progressState)
+}
+
 function TaskAPIFactory (PouchDB) {
   if (typeof PouchDB !== 'function') {
     throw new Error('Task API Factory requires PouchDB as first argument')
@@ -29,25 +43,18 @@ function TaskAPIFactory (PouchDB) {
 
       api.success = function (taskDoc, data) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
-        if (data) taskDoc['data'] = data
+        if (data) {
+          addToProgressLifeCycle(taskDoc, {name: 'success', data: data})
+        } else {
+          addToProgressLifeCycle(taskDoc, {name: 'success'})
+        }
         return taskStore.remove(taskDoc)
       }
 
       api.progress = function (taskDoc, options) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
 
-        // shallow merge options with defaults
-        var progressState = _.assign({
-          name: 'progress',
-          at: new Date().toISOString()
-        }, options)
-
-        // check whether `progress` is a key in taskDoc and if it is an Array
-        if (taskDoc['progress'] === undefined || !Array.isArray(taskDoc['progress'])) {
-          taskDoc['progress'] = []
-        }
-        taskDoc['progress'].push(progressState)
-
+        addToProgressLifeCycle(taskDoc, options)
         // update the taskDoc with new progress state, in the task store
         return taskStore.update(taskDoc)
       }
@@ -55,7 +62,7 @@ function TaskAPIFactory (PouchDB) {
       api.error = function (taskDoc, error) {
         if (!taskDoc) throw new Error('Task Error requires taskdoc as first argument')
         if (!error) throw new Error('Task Error requires error as second argument')
-        taskDoc['error'] = error
+        addToProgressLifeCycle(taskDoc, {name: 'error', error: error})
         return taskStore.remove(taskDoc)
       }
 
