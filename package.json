@@ -1,5 +1,6 @@
 {
   "name": "@hoodie/task-server",
+  "version": "0.0.0-semantically-released",
   "description": "Hapi plugin that exposes an API for managing tasks and routes for task syncing",
   "main": "index.js",
   "scripts": {
